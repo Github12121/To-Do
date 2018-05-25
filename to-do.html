@@ -1,0 +1,34 @@
+<html>
+<head>
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <style>
+
+    </style>
+</head>
+<body>
+<div id= "app">
+<h1>To-Do</h1>
+    <h2>Type something that you need to do and press enter!</h2>
+<input type="text" v-model="newtodo" v-on:keyup.enter="add"/>
+    <ul>
+        <li v-for="todo in todos">{{ todo }}</li>
+    </ul>
+
+</div>
+<script>
+    var app = new Vue({
+        el: '#app',
+        data: {
+            newtodo: "",
+            todos: ["Get the mail!","Walk the dog!","Buy Millicoin","Play Simon"],
+        },
+        methods: {
+            add: function () {
+                alert('add!');
+            }
+        }
+
+    });
+</script>
+</body>
+</html>
