@@ -9,22 +9,34 @@
 <div id= "app">
 <h1>To-Do</h1>
     <h2>Type something that you need to do and press enter!</h2>
-<input type="text" v-model="newtodo" v-on:keyup.enter="add"/>
+<input type="text" v-model="newtodo" v-on:keyup.enter="add()"/>
     <ul>
-        <li v-for="todo in todos">{{ todo }}</li>
+        <li v-for="todo in todos">
+            {{ todo }}
+            <button type="button" v-on:click="remove(todo)">Delete</button>
+        </li>
     </ul>
-
+<button type="button" v-on:click="reset">Reset</button>
 </div>
 <script>
     var app = new Vue({
         el: '#app',
         data: {
             newtodo: "",
-            todos: ["Get the mail!","Walk the dog!","Buy Millicoin","Play Simon"],
+            todos: [],
         },
         methods: {
             add: function () {
-                alert('add!');
+                this.todos.push(this.newtodo);
+                this.newtodo = "";
+            },
+            reset: function () {
+                this.todos = [];
+            },
+            remove: function (todo) {
+                //alert(todo);
+               var index = this.todos.indexOf(todo);
+               this.todos[index] = '';
             }
         }
 
