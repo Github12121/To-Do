@@ -19,11 +19,34 @@
 <button type="button" v-on:click="reset">Reset</button>
 </div>
 <script>
+    var todoStorage = {
+        fetch: function (){
+            var todos = JSON.parse(localStorage.getItem('storage'));
+            if (!todos){
+                todos = [];
+            }
+            return todos;
+        },
+        save: function (todos) {
+            var stringTodos = JSON.stringify(todos);
+            console.log(stringTodos);
+            localStorage.setItem('storage', stringTodos);
+
+
+        }
+    }
     var app = new Vue({
         el: '#app',
         data: {
             newtodo: "",
-            todos: [],
+            todos: todoStorage.fetch()
+        },
+        watch: {
+            todos:{
+                handler: function(todos){
+                    todoStorage.save(todos)
+                }
+            }
         },
         methods: {
             add: function () {
