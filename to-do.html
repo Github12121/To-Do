@@ -1,24 +1,33 @@
 <html>
 <head>
     <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <script src="https://unpkg.com/vue-typer/dist/vue-typer.min.js"></script>
     <style>
-
+        li.complete {
+            text-decoration: line-through;
+        }
     </style>
 </head>
 <body>
 <div id= "app">
-<h1>To-Do</h1>
+<h1><vue-typer text='Todo List'></vue-typer></h1>
     <h2>Type something that you need to do and press enter!</h2>
 <input type="text" v-model="newtodo" v-on:keyup.enter="add()"/>
     <ul>
-        <li v-for="todo in todos">
-            {{ todo }}
+        <li v-bind:class="{ complete: todo.complete }" v-for="todo in todos">
+
+            {{ todo.text }}
             <button type="button" v-on:click="remove(todo)">Delete</button>
-        </li>
+            <button type="button" v-on:click="complete(todo)">Complete</button>
+         </li>
     </ul>
 <button type="button" v-on:click="reset">Reset</button>
 </div>
 <script>
+    //var VueTyperPlugin = require('vue-typer').default;
+    var VueTyperPlugin = window.VueTyper.default;
+    Vue.use(VueTyperPlugin)
+
     var todoStorage = {
         fetch: function (){
             var todos = JSON.parse(localStorage.getItem('storage'));
@@ -50,17 +59,22 @@
         },
         methods: {
             add: function () {
-                this.todos.push(this.newtodo);
+                //this.todos.push(this.newtodo);
+                this.todos.push({text: this.newtodo, complete: false});
                 this.newtodo = "";
             },
             reset: function () {
                 this.todos = [];
             },
             remove: function (todo) {
-                console.log(this.todos);
+               //console.log(this.todos);
                var index = this.todos.indexOf(todo);
                this.todos.splice(index,1);
-               console.log(this.todos);
+               //console.log(this.todos);
+            },
+            complete: function(todo) {
+                //console.log(todo);
+                todo.complete = true;
             }
         }
 
