@@ -34,9 +34,10 @@
                 this.todos = [];
             },
             remove: function (todo) {
-                //alert(todo);
+                console.log(this.todos);
                var index = this.todos.indexOf(todo);
-               this.todos[index] = '';
+               this.todos.splice(index,1);
+               console.log(this.todos);
             }
         }
 
