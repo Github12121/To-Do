@@ -10,11 +10,13 @@
 </head>
 <body>
 <div id= "app">
+
+
 <h1><vue-typer text='Todo List'></vue-typer></h1>
     <h2>Type something that you need to do and press enter!</h2>
 <input type="text" v-model="newtodo" v-on:keyup.enter="add()"/>
     <ul>
-        <li v-bind:class="{ complete: todo.complete }" v-for="todo in todos">
+        <li v-bind:class="{ complete: todo.complete }" v-for="todo in filteredTodos">
 
             {{ todo.text }}
             <button type="button" v-on:click="remove(todo)">Delete</button>
@@ -22,6 +24,9 @@
          </li>
     </ul>
 <button type="button" v-on:click="reset">Reset</button>
+    <button type="button" v-on:click="visibility = 'complete'">Show complete</button>
+    <button type="button" v-on:click="visibility = 'incomplete'">Show incomplete</button>
+    <button type="button" v-on:click="visibility = 'all'">Show all</button>
 </div>
 <script>
     //var VueTyperPlugin = require('vue-typer').default;
@@ -44,17 +49,49 @@
 
         }
     }
+
+    var filters = {
+        all: function(todos) {
+            return todos;
+        },
+        complete: function(todos) {
+            return todos;
+        },
+        incomplete: function(todos) {
+            return todos;
+        }
+    };
+
     var app = new Vue({
         el: '#app',
         data: {
             newtodo: "",
-            todos: todoStorage.fetch()
+            todos: todoStorage.fetch(),
+            visibility: "all"
         },
         watch: {
+            visibility:{
+                handler: function(visibility){
+                    alert(visibility)
+                }
+            },
             todos:{
                 handler: function(todos){
                     todoStorage.save(todos)
                 }
+            }
+        },
+        computed: {
+            filteredTodos: function () {
+                var filtered =[];
+                for (var todo of this.todos) {
+                    if (todo.complete != true) {
+                        filtered.push(todo);
+                    }
+                }
+                console.log(filtered);
+                console.log(this.todos);
+                return filtered;
             }
         },
         methods: {
