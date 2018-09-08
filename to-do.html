@@ -72,7 +72,7 @@
         watch: {
             visibility:{
                 handler: function(visibility){
-                    alert(visibility)
+                    //alert(visibility)
                 }
             },
             todos:{
@@ -85,7 +85,20 @@
             filteredTodos: function () {
                 var filtered =[];
                 for (var todo of this.todos) {
-                    if (todo.complete != true) {
+                    //if (todo.complete != true) {
+                    //    filtered.push(todo);
+                    //}
+                    if (this.visibility == 'complete' ) {
+                        if (todo.complete == true) {
+                            filtered.push(todo);
+                        }
+                    }
+                    if (this.visibility == 'incomplete') {
+                        if (todo.complete == false){
+                            filtered.push(todo);
+                        }
+                    }
+                    if (this.visibility == 'all') {
                         filtered.push(todo);
                     }
                 }
