@@ -88,18 +88,21 @@
                     //if (todo.complete != true) {
                     //    filtered.push(todo);
                     //}
-                    if (this.visibility == 'complete' ) {
-                        if (todo.complete == true) {
-                            filtered.push(todo);
-                        }
-                    }
-                    if (this.visibility == 'incomplete') {
-                        if (todo.complete == false){
-                            filtered.push(todo);
-                        }
-                    }
-                    if (this.visibility == 'all') {
-                        filtered.push(todo);
+                    switch (this.visibility) {
+                        case 'complete':
+                            if (todo.complete == true) {
+                                filtered.push(todo);
+                            }
+                            break;
+                        case 'incomplete':
+                            if (todo.complete == false) {
+                                filtered.push(todo);
+                             }
+                             break;
+                        default:
+                            if (this.visibility == 'all') {
+                                filtered.push(todo);
+                            }
                     }
                 }
                 console.log(filtered);
